@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Background_Erase</string>
+    <string name="background_eraser_offline">Background\nEraser - Offline</string>
+    <string name="remove_background_one_click_100_offline">Remove background 100% offline</string>
+    <string name="start">Start</string>
+    <string name="privacy_policy">Privacy &amp; Terms</string>
+</resources>
