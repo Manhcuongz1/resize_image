@@ -64,6 +64,10 @@ dependencies {
     implementation(libs.androidx.navigation.navigation.ui)
     implementation(libs.androidx.navigation.navigation.compose)
 
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
+
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 }
