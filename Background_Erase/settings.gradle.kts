@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Background_Erase"
 include(":app")
- 
+include(":domain")
+include(":data")

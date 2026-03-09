@@ -1,6 +1,5 @@
 package com.example.background_erase.nav
 
-import androidx.compose.runtime.Composable
 import kotlinx.serialization.Serializable
 
 sealed class Routers {
@@ -8,7 +7,7 @@ sealed class Routers {
     data object Onboarding
 
     @Serializable
-    data object Home
+    data object ChatHomeScreen
 
     @Serializable
     data object Setting

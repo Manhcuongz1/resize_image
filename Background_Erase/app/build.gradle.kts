@@ -66,4 +66,8 @@ dependencies {
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
 }
