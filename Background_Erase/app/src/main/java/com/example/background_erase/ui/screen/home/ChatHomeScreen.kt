@@ -2,7 +2,6 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -40,14 +37,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.background_erase.ui.WrapDefault
+import com.example.background_erase.ui.resource.BorderColor
+import com.example.background_erase.ui.resource.IconBackgroundColor
+import com.example.background_erase.ui.resource.LightColor
+import com.example.background_erase.ui.resource.SendButtonColor
+import com.example.background_erase.ui.screen.home.components.MessageBubble
+import com.example.background_erase.ui.screen.home.components.TypingIndicator
 import com.example.background_erase.ui.screen.home.model.Message
-
-// Định nghĩa màu sắc từ UI
-val BotBubbleColor = Color(0xFFF4F5F7)
-val UserBubbleColor = Color(0xFF000000)
-val IconBackgroundColor = Color(0xFFF4F5F7)
-val SendButtonColor = Color(0xFFAFAFAF)
-val BorderColor = Color(0xFFE5E7EB)
+import com.example.background_erase.ui.screen.home.model.TextDataUI
 
 @Preview
 @Composable
@@ -55,7 +53,9 @@ fun ChatHomeScreen(
 
 ) {
     ConstraintLayout(
-        Modifier.fillMaxHeight()
+        Modifier
+            .fillMaxHeight()
+            .WrapDefault()
     ) {
         val (header, bodyChat, footer) = createRefs()
         TopActionButtons(
@@ -81,17 +81,17 @@ fun ChatHomeScreen(
         ) {
             item {
                 MessageBubble(
-                    Message(
-                        text = "Xin chào. Hôm nay bạn đã chi tiêu gì chưa? Hãy nhắn cho tôi nhé.",
-                        sender = Message.Sender.Gemini
+                    text = "Xin chào. Hôm nay bạn đã chi tiêu gì chưa? Hãy nhắn cho tôi nhé.",
+                    sender = Message.Sender.LLM(
+                        "",
+                        TextDataUI("Xin chào. Hôm nay bạn đã chi tiêu gì chưa? Hãy nhắn cho tôi nhé.")
                     )
                 )
             }
             item {
                 MessageBubble(
-                    Message(
-                        text = "Xin chào. Hôm nay bạn đã chi tiêu gì chưa? Hãy nhắn cho tôi nhé."
-                    )
+                    text = "Xin chào. Hôm nay bạn đã chi tiêu gì chưa? Hãy nhắn cho tôi nhé.",
+                    sender = Message.Sender.User()
                 )
             }
             item {
@@ -118,7 +118,7 @@ fun TopActionButtons(modifier: Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 6.dp),
+                .padding(horizontal = 8.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(
@@ -154,66 +154,6 @@ fun TopActionButtons(modifier: Modifier) {
 }
 
 @Composable
-fun MessageBubble(message: Message) {
-    val alignment =
-        if (message.isUser()) Alignment.CenterEnd else Alignment.CenterStart
-    val backgroundColor =
-        if (message.isUser()) UserBubbleColor else BotBubbleColor
-    val textColor = if (message.isUser()) Color.White else Color.Black
-
-    // Bo góc tùy biến: bubble của bot và user thường có 1 góc nhọn để tạo đuôi (tail)
-    val bubbleShape = if (message.isUser()) {
-        RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 16.dp, bottomEnd = 4.dp)
-    } else {
-        RoundedCornerShape(topStart = 4.dp, topEnd = 16.dp, bottomStart = 16.dp, bottomEnd = 16.dp)
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        contentAlignment = alignment
-    ) {
-        Text(
-            text = message.text,
-            color = textColor,
-            fontSize = 16.sp,
-            modifier = Modifier
-                .background(color = backgroundColor, shape = bubbleShape)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                .widthIn(max = 280.dp)
-        )
-    }
-}
-
-@Composable
-fun TypingIndicator() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        Row(
-            modifier = Modifier
-                .background(color = BotBubbleColor, shape = RoundedCornerShape(16.dp))
-                .padding(horizontal = 16.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(3) {
-                Box(
-                    modifier = Modifier
-                        .size(6.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray.copy(alpha = 0.6f))
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun ChatInputBar(modifier: Modifier) {
     var text by remember { mutableStateOf("") }
 
@@ -224,6 +164,7 @@ fun ChatInputBar(modifier: Modifier) {
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 6.dp, top = 6.dp, bottom = 6.dp)
                 .border(width = 1.dp, color = BorderColor, shape = CircleShape)
+                .background(LightColor)
                 .padding(
                     paddingValues = PaddingValues(
                         start = 20.dp,

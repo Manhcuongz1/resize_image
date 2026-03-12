@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "941427192004",
+    "project_id": "test-bee5d",
+    "storage_bucket": "test-bee5d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941427192004:android:6a6f1a745d877c4ed69991",
+        "android_client_info": {
+          "package_name": "com.example.background_erase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK5h3bSuM6RYJi-0XXRDqiv0mh6IFuEzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

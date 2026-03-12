@@ -22,7 +22,7 @@ import com.example.background_erase.R
 import com.example.background_erase.ui.WrapDefault
 import com.example.background_erase.ui.resource.Accent_0xFF4E74FF
 import com.example.background_erase.ui.resource.Black_0xFF0F0F10
-import com.example.background_erase.ui.resource.White_0xFFEAE5DE
+import com.example.background_erase.ui.resource.White_F8FAFCFF
 
 @Preview
 @Composable
@@ -37,11 +37,11 @@ fun OnboardingScreen(
     modifier: Modifier = Modifier
 ) {
     val bg = Black_0xFF0F0F10
-    val titleColor = White_0xFFEAE5DE
+    val titleColor = White_F8FAFCFF
     val accent = Accent_0xFF4E74FF
 
     ConstraintLayout(
-       modifier=  modifier.WrapDefault()
+        modifier = modifier.WrapDefault()
     ) {
         val (t1, t2, sub, btnStart, privacy) = createRefs()
         Text(
