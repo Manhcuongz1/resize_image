@@ -1,9 +1,19 @@
 package freelance.demoapp.domain.model
 
-data class DataPrompt(
-    val text: String,
-    val location: String,
-    val currencyUnit: String,
-    val date: String,
-    val categories: List<String>,
-)
+data class Message(
+    val id: Long = 0,
+
+    val conversationId: Long,
+
+    val sender: Sender,
+
+    val content: String,
+
+    val createdAt: Long = System.currentTimeMillis(),
+
+    val transaction: List<Transaction>
+) {
+    enum class Sender {
+        User, LLM
+    }
+}

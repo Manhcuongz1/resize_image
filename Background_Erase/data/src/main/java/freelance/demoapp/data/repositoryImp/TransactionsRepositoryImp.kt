@@ -6,10 +6,11 @@ import com.google.firebase.ai.type.GenerativeBackend
 import freelance.demoapp.data.llm.PromptFactory
 import freelance.demoapp.data.llm.generativeModel
 import freelance.demoapp.data.llm.toSchema
-import freelance.demoapp.data.model.TransactionLLM
-import freelance.demoapp.data.model.toTransaction
+import freelance.demoapp.data.model.TransactionResponseLLM
+import freelance.demoapp.data.model.toTransactionResponse
 import freelance.demoapp.domain.model.DataPrompt
 import freelance.demoapp.domain.model.Transaction
+import freelance.demoapp.domain.model.TransactionResponse
 import freelance.demoapp.domain.repository.TransactionsRepository
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class TransactionsRepositoryImp @Inject constructor() : TransactionsRepository {
     private val ai = Firebase.ai(backend = GenerativeBackend.googleAI())
 
-    override suspend fun extractTransactions(dataPrompt: DataPrompt): List<Transaction> {
+    override suspend fun extractTransactions(dataPrompt: DataPrompt): List<TransactionResponse> {
         val schema = Transaction.toSchema()
         val data = ai.generativeModel(schema)
             .generateContent(
@@ -28,7 +29,7 @@ class TransactionsRepositoryImp @Inject constructor() : TransactionsRepository {
             isLenient = true
         }
         val transaction =
-            json.decodeFromString<List<TransactionLLM>>(data.text ?: "").map { it.toTransaction() }
+            json.decodeFromString<List<TransactionResponseLLM>>(data.text ?: "").map { it.toTransactionResponse() }
 
         return transaction
     }

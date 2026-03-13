@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+
+    id ("kotlin-kapt")
 }
 
 android {
@@ -49,6 +51,11 @@ dependencies {
 
     implementation("androidx.annotation:annotation-experimental:1.5.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.8.4")
+
+    implementation ("androidx.room:room-ktx:2.8.4")
 
     implementation(project(":domain"))
 }

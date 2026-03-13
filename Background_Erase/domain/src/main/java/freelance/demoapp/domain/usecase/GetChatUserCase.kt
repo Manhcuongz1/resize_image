@@ -1,6 +1,6 @@
 package freelance.demoapp.domain.usecase
 
-import freelance.demoapp.domain.Message
+import freelance.demoapp.domain.model.Message
 import freelance.demoapp.domain.repository.ChatRepository
 
 class GetChatUserCase(

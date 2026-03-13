@@ -1,9 +1,9 @@
 package freelance.demoapp.domain.repository
 
-import freelance.demoapp.domain.model.DataPrompt
-import freelance.demoapp.domain.model.Transaction
+import freelance.demoapp.domain.model.Message
+
 
 interface ChatRepository {
 
-    suspend fun generateTransaction(dataPrompt: DataPrompt) : Transaction
+    suspend fun getChat(conversation : Long, offset : Long) : List<Message>
 }
