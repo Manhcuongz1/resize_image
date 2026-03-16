@@ -1,12 +1,13 @@
 package freelance.demoapp.domain.model
 
-import kotlinx.serialization.Serializable
+import java.math.BigDecimal
 
 
 data class Transaction(
     val type: Type,
-    val dateLabel: String,
-    val amount: Long,
+    val dateLabel: Long,
+    val amount: BigDecimal,
+    val note: String,
     val category: Category,
 ) {
     companion object {}

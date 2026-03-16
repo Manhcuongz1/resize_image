@@ -1,6 +1,5 @@
 package com.example.background_erase
 
-import ChatHomeScreen
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.background_erase.nav.Routers
 import com.example.background_erase.ui.screen.OnboardingScreen
+import com.example.background_erase.ui.screen.home.ChatHomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 

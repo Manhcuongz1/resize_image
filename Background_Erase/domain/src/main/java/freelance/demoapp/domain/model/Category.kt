@@ -1,7 +1,7 @@
 package freelance.demoapp.domain.model
 
 data class Category(
-    val id: Long = 0,
+    val id: Long = -1,
 
     val name: String,
 

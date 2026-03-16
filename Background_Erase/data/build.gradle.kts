@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
 
-    id ("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -11,7 +11,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-
+        minSdk = 29
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -52,8 +52,14 @@ dependencies {
     implementation("androidx.annotation:annotation-experimental:1.5.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
-    implementation ("androidx.room:room-runtime:2.6.1")
-    kapt ("androidx.room:room-compiler:2.8.4")
+
+    implementation("com.google.dagger:hilt-android:2.57.1")
+
+    ksp("com.google.dagger:hilt-compiler:2.57.1")
+
+    val room_version = "2.8.4"
+    implementation ("androidx.room:room-runtime:$room_version")
+    ksp ("androidx.room:room-compiler:$room_version")
 
     implementation ("androidx.room:room-ktx:2.8.4")
 

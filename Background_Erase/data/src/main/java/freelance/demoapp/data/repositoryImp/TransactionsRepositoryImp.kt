@@ -1,5 +1,6 @@
 package freelance.demoapp.data.repositoryImp
 
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
@@ -9,7 +10,6 @@ import freelance.demoapp.data.llm.toSchema
 import freelance.demoapp.data.model.TransactionResponseLLM
 import freelance.demoapp.data.model.toTransactionResponse
 import freelance.demoapp.domain.model.DataPrompt
-import freelance.demoapp.domain.model.Transaction
 import freelance.demoapp.domain.model.TransactionResponse
 import freelance.demoapp.domain.repository.TransactionsRepository
 import kotlinx.serialization.json.Json
@@ -19,7 +19,7 @@ class TransactionsRepositoryImp @Inject constructor() : TransactionsRepository {
     private val ai = Firebase.ai(backend = GenerativeBackend.googleAI())
 
     override suspend fun extractTransactions(dataPrompt: DataPrompt): List<TransactionResponse> {
-        val schema = Transaction.toSchema()
+        val schema = TransactionResponseLLM.toSchema()
         val data = ai.generativeModel(schema)
             .generateContent(
                 PromptFactory.getPrompt(dataPrompt)
@@ -28,6 +28,13 @@ class TransactionsRepositoryImp @Inject constructor() : TransactionsRepository {
             ignoreUnknownKeys = true
             isLenient = true
         }
+        Log.d("Gemini call","response: ${data.text}")
+        Log.d("Gemini call", """
+                Prompt tokens: ${data.usageMetadata?.promptTokenCount}
+                Candidate tokens: ${data.usageMetadata?.candidatesTokenCount}
+                Total tokens: ${data.usageMetadata?.totalTokenCount}
+            """.trimIndent()
+        )
         val transaction =
             json.decodeFromString<List<TransactionResponseLLM>>(data.text ?: "").map { it.toTransactionResponse() }
 

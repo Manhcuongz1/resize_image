@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
-
+    id("com.google.devtools.ksp")
+    id ("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
 }
 
@@ -96,6 +97,15 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-ai")
+
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    implementation("com.google.android.generativeai:generativeai:0.9.0")
+
+    ksp("com.google.dagger:hilt-compiler:2.57.1")
+
+    val room_version = "2.8.4"
+    implementation ("androidx.room:room-runtime:$room_version")
+    ksp ("androidx.room:room-compiler:$room_version")
 
     implementation(project(":domain"))
     implementation(project(":data"))

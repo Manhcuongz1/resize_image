@@ -18,6 +18,7 @@ fun FirebaseAI.generativeModel(schema: Schema): GenerativeModel {
         generationConfig = generationConfig {
             responseMimeType = "application/json"
             responseSchema = schema
-        }
+        },
+       // systemInstruction =
     )
 }

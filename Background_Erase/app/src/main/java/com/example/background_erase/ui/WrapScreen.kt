@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.example.background_erase.ui.resource.BaseBackground
 
 @Suppress("FunctionName")
-fun Modifier.WrapDefault(paddingHorizontal: Dp = 16.dp, paddingVertical : Dp =  16.dp): Modifier {
+fun Modifier.WrapDefault(paddingHorizontal: Dp = 8.dp, paddingVertical: Dp = 8.dp): Modifier {
     return this
         .fillMaxSize()
         .background(BaseBackground)
