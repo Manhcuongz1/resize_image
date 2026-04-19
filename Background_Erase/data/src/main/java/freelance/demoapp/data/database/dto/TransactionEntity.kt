@@ -29,6 +29,8 @@ data class TransactionEntity(
 
     val description: String,
 
+    val type: Enums.TypeTransaction, // INCOME / EXPENSE
+
     val transactionDate: Long,
 
     val createdAt: Long = System.currentTimeMillis()

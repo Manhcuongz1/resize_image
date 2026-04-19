@@ -39,7 +39,7 @@ object DatabaseProvider {
     }
     private fun insertInitialData(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            val dao = getDatabase(context).chatDao()
+            val dao = getDatabase(context).appDatabaseDao()
             val conversation = ConversationEntity(
                 title = "User_${LocalDateTime.now()}"
             )

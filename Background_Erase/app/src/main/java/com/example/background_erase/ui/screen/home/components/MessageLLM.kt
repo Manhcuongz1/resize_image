@@ -55,35 +55,38 @@ fun AiTransactionBubblePreview() {
         conversationId = 1,
         transaction = listOf(
             TransactionUI(
-                type = TransactionUI.Type.EXPENSE,
+                type = TransactionUI.Type.Expense,
                 dateLabel = System.currentTimeMillis(),
                 amount = BigDecimal("10000"),
                 category = CategoryUI(
                     id = 1,
                     name = "Ăn uống",
-                    type = TransactionUI.Type.EXPENSE
+                    type = TransactionUI.Type.Expense,
+                    colorBackground = 0xFF000100
                 ),
                 note = "Bún bò"
             ),
             TransactionUI(
-                type = TransactionUI.Type.EXPENSE,
+                type = TransactionUI.Type.Expense,
                 dateLabel = System.currentTimeMillis(),
                 amount = BigDecimal("200000"),
                 category = CategoryUI(
                     id = 1,
                     name = "Tiền lương",
-                    type = TransactionUI.Type.EXPENSE
+                    type = TransactionUI.Type.Expense,
+                    colorBackground = 0xFF000100
                 ),
                 note = "Lương tháng 1"
             ),
             TransactionUI(
-                type = TransactionUI.Type.INCOME,
+                type = TransactionUI.Type.Income,
                 dateLabel = System.currentTimeMillis(),
                 amount = BigDecimal(2000000) + BigDecimal(100000),
                 category = CategoryUI(
                     id = 1,
                     name = "Tiền thưởng",
-                    type = TransactionUI.Type.EXPENSE
+                    type = TransactionUI.Type.Expense,
+                    colorBackground = 0xFF000100
                 ),
                 note = "Thưởng tháng 1"
             ),
@@ -179,7 +182,7 @@ fun DateSeparator(label: Long) {
 
 @Composable
 fun TransactionItem(info: TransactionUI) {
-    val isExpense = info.type == TransactionUI.Type.EXPENSE
+    val isExpense = info.type == TransactionUI.Type.Expense
     val iconColor = if (isExpense) ExpenseColor else IncomeColor
     val iconBgColor = if (isExpense) ExpenseBgColor else IncomeBgColor
     val iconVector = if (isExpense) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward // Tiền ra (Up), Tiền vào (Down)
@@ -192,7 +195,7 @@ fun TransactionItem(info: TransactionUI) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, BorderLightColor, RoundedCornerShape(16.dp))
+            .border(1.dp,Color.White, RoundedCornerShape(16.dp))
             .background(ItemBgColor, RoundedCornerShape(16.dp))
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically

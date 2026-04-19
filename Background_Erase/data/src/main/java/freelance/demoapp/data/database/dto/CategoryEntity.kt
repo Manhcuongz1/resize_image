@@ -11,6 +11,8 @@ data class CategoryEntity(
 
     val name: String,
 
+    val colorBackground: Long,
+
     val type: Enums.TypeTransaction, // INCOME / EXPENSE
 
     val createdAt: Long = System.currentTimeMillis()

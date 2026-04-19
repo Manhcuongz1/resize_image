@@ -32,9 +32,9 @@ val LightColor = Color(0xfff9fafb)
 
 
 // Mã màu theo thiết kế
-val ExpenseColor = Color(0xFFF06A6A)
+val ExpenseColor = Color(0xFFC64343)
 val ExpenseBgColor = Color(0xFFFDE8E8)
-val IncomeColor = Color(0xFF4CAF50)
+val IncomeColor = Color(0xFF37A33B)
 val IncomeBgColor = Color(0xFFE8F5E9)
 val ItemBgColor = Color(0xFFFBFBFB)
-val BorderLightColor = Color(0xFFFFFFFF)
+val BorderLightColor = Color(0xFFE2E2E2)

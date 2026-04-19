@@ -3,7 +3,7 @@ package freelance.demoapp.data.database.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import freelance.demoapp.data.database.dao.ChatDao
+import freelance.demoapp.data.database.dao.AppDatabaseDao
 import freelance.demoapp.data.database.dto.CategoryEntity
 import freelance.demoapp.data.database.dto.ConversationEntity
 import freelance.demoapp.data.database.dto.MessageEntity
@@ -22,5 +22,5 @@ import freelance.demoapp.data.database.dto.TransactionEntity
 @TypeConverters(RoomConverter::class)
 abstract class ChatDatabase : RoomDatabase() {
 
-    abstract fun chatDao(): ChatDao
+    abstract fun appDatabaseDao(): AppDatabaseDao
 }

@@ -8,6 +8,8 @@ sealed class Routers {
 
     @Serializable
     data object ChatHomeScreen
+    @Serializable
+    data object FinanceStatisticScreen
 
     @Serializable
     data object Setting

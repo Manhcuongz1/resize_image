@@ -17,8 +17,13 @@ fun Message.toMessageUI() = MessageUI(
 )
 
 fun Transaction.Type.toTransactionUIType() = when (this) {
-    Transaction.Type.EXPENSE -> TransactionUI.Type.EXPENSE
-    Transaction.Type.INCOME -> TransactionUI.Type.INCOME
+    Transaction.Type.Expense -> TransactionUI.Type.Expense
+    Transaction.Type.Income -> TransactionUI.Type.Income
+}
+
+fun TransactionUI.Type.toTransactionType() = when (this) {
+    TransactionUI.Type.Expense -> Transaction.Type.Expense
+    TransactionUI.Type.Income -> Transaction.Type.Income
 }
 
 fun Message.Sender.toMessageUISender() = when (this) {
@@ -28,7 +33,8 @@ fun Message.Sender.toMessageUISender() = when (this) {
 fun Category.toCategoryUI() = CategoryUI(
     id = id,
     name = name,
-    type = type.toTransactionUIType()
+    type = type.toTransactionUIType(),
+    colorBackground = colorBackground
 )
 fun Transaction.toTransactionUI() = TransactionUI(
     type = type.toTransactionUIType(),
@@ -36,4 +42,11 @@ fun Transaction.toTransactionUI() = TransactionUI(
     amount = amount,
     note = note,
     category = category.toCategoryUI()
+)
+
+fun CategoryUI.toCategory() = Category(
+    id = id,
+    name = name,
+    type = type.toTransactionType(),
+    colorBackground = colorBackground
 )

@@ -5,8 +5,14 @@ data class Category(
 
     val name: String,
 
+    val colorBackground: Long,
+
     val type: Transaction.Type,
 
     val createdAt: Long = System.currentTimeMillis()
-)
+) {
+    companion object {
+        const val COLOR_ICON_DEFAULT : Long = 0xF8FAFC
+    }
+}
 

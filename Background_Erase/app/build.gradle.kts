@@ -60,6 +60,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -99,13 +100,16 @@ dependencies {
     implementation("com.google.firebase:firebase-ai")
 
     implementation("com.google.dagger:hilt-android:2.57.1")
-    implementation("com.google.android.generativeai:generativeai:0.9.0")
+
+    implementation("com.google.firebase:firebase-ai")
 
     ksp("com.google.dagger:hilt-compiler:2.57.1")
 
     val room_version = "2.8.4"
     implementation ("androidx.room:room-runtime:$room_version")
     ksp ("androidx.room:room-compiler:$room_version")
+
+    implementation("org.instancio:instancio-junit:5.5.1")
 
     implementation(project(":domain"))
     implementation(project(":data"))

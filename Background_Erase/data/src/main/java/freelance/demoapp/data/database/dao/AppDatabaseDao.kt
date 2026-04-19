@@ -3,13 +3,16 @@ package freelance.demoapp.data.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import freelance.demoapp.data.database.dto.CategoryEntity
 import freelance.demoapp.data.database.dto.ConversationEntity
 import freelance.demoapp.data.database.dto.MessageEntity
 import freelance.demoapp.data.database.dto.TransactionEntity
 import freelance.demoapp.data.database.dto.pojo.MessageTransactionCategoryPOJO
+import freelance.demoapp.data.database.dto.pojo.TransactionWithCategoryPOJO
 
 @Dao
-interface ChatDao {
+interface AppDatabaseDao {
 
     @Insert
     suspend fun insertConversation(conversation: ConversationEntity): Long
@@ -20,6 +23,12 @@ interface ChatDao {
 
     @Insert
     suspend fun insertMessage(message: MessageEntity): Long
+
+    @Insert
+    suspend fun createCategory(category: CategoryEntity): Long
+
+    @Query("SELECT * FROM categories")
+    suspend fun getCategories(): List<CategoryEntity>
 
     @Query(
     """
@@ -49,11 +58,13 @@ interface ChatDao {
         t.amount AS transaction_amount,
         t.description AS transaction_description,
         t.transactionDate AS transaction_transactionDate,
+        t.type AS transaction_type,
         t.createdAt AS transaction_createdAt,
         
         c.id AS category_id,
         c.name AS category_name,
         c.type AS category_type,
+        c.colorBackground AS category_colorBackground,
         c.createdAt AS category_createdAt
         
         FROM (
@@ -73,5 +84,25 @@ interface ChatDao {
     suspend fun getMessagesWithTransactionCategory(
         conversationId: Long, offset: Long
     ): List<MessageTransactionCategoryPOJO>
+
+    @Transaction
+    @Query("SELECT * FROM transactions")
+    suspend fun getAllTransaction(): List<TransactionWithCategoryPOJO>
+
+
+    @Transaction
+    suspend fun insertMessageWithTransactions(
+        message: MessageEntity,
+        transactions: List<TransactionEntity>
+    ): Long {
+        val messageId = insertMessage(message)
+
+        val updatedTransactions = transactions.map {
+            it.copy(messageId = messageId)
+        }
+
+        insertTransactions(updatedTransactions)
+        return messageId
+    }
 
 }

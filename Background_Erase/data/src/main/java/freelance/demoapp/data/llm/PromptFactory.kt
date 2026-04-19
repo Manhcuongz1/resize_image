@@ -21,10 +21,10 @@ object PromptFactory {
           Rules:
           1. Country: ${dataPrompt.countryName}, Language: ${dataPrompt.language}, currency unit: ${dataPrompt.currencyUnit}
           2. Prioritize using an existing Category if the meaning is similar. (Example: "Grab", "Gas" -> use "Transportation").
-          3. Only create a new category (1–2 words) if it does not fit any of the categories above
+          3. Only create a new category (1–2 words) with language${dataPrompt.language} if it does not fit any of the categories above
           4. Any NEW category MUST be written in ${dataPrompt.language}.
           5. Separate each income/expense into its own transaction.
-          6. Specific details ("Highland Coffee", "Refuel") -> "description"
+          6. Specific details ("have breakfast", "Car repair") -> "note"
           7. If there are spelling mistakes, infer from the context
         """.trimIndent()
     }

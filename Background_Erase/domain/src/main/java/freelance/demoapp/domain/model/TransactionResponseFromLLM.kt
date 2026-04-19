@@ -2,7 +2,7 @@ package freelance.demoapp.domain.model
 
 import java.math.BigDecimal
 
-data class TransactionResponse(
+data class TransactionResponseFromLLM(
     val type: String,
     val dateLabel: Long,
     val amount: BigDecimal,
@@ -10,10 +10,11 @@ data class TransactionResponse(
     val category: String,
 ) {
 }
-fun TransactionResponse.toTransaction(): Transaction? {
+fun TransactionResponseFromLLM.toTransaction(category: Category?): Transaction? {
+    if (category == null) return null
     val typeTransaction = when(this.type) {
-        Transaction.Type.EXPENSE.value -> Transaction.Type.EXPENSE
-        Transaction.Type.INCOME.value -> Transaction.Type.INCOME
+        Transaction.Type.Expense.value -> Transaction.Type.Expense
+        Transaction.Type.Income.value -> Transaction.Type.Income
         else -> return null
     }
     return Transaction(
@@ -21,9 +22,6 @@ fun TransactionResponse.toTransaction(): Transaction? {
         dateLabel = dateLabel,
         amount = amount,
         note = note,
-        category = Category(
-            name = this@toTransaction.category,
-            type = typeTransaction
-        )
+        category = category
     )
 }

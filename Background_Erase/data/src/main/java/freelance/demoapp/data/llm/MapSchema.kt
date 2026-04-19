@@ -2,6 +2,7 @@ package freelance.demoapp.data.llm
 
 import com.google.firebase.ai.type.Schema
 import freelance.demoapp.data.model.TransactionResponseLLM
+import freelance.demoapp.data.utils.Utils
 
 fun TransactionResponseLLM.Companion.toSchema(): Schema {
     return Schema.array(
@@ -12,7 +13,9 @@ fun TransactionResponseLLM.Companion.toSchema(): Schema {
                         TransactionResponseLLM.INCOME, TransactionResponseLLM.EXPENSE
                     )
                 ),
-                TransactionResponseLLM::dateLabel.name to Schema.integer(),
+                TransactionResponseLLM::dateLabel.name to Schema.string(
+                    description = "Date time format: ${Utils.PATTERN_DATE_DEFAULT}"
+                ),
                 TransactionResponseLLM::amount.name to Schema.double(),
                 TransactionResponseLLM::category.name to Schema.string(),
                 TransactionResponseLLM::note.name to Schema.string()

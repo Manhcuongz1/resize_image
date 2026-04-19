@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="expense_1">#FF8A80</color>
+    <color name="expense_2">#F48FB1</color>
+    <color name="expense_3">#CE93D8</color>
+    <color name="expense_4">#B39DDB</color>
+    <color name="expense_5">#9FA8DA</color>
+    <color name="expense_6">#90CAF9</color>
+    <color name="expense_7">#81D4FA</color>
+    <color name="expense_8">#80CBC4</color>
+    <color name="expense_9">#FFE082</color>
+    <color name="expense_10">#90A4AE</color>
+
+
+    <color name="expense_11">#EF9A9A</color>
+    <color name="expense_12">#F06292</color>
+    <color name="expense_13">#BA68C8</color>
+    <color name="expense_14">#9575CD</color>
+    <color name="expense_15">#7986CB</color>
+    <color name="expense_16">#64B5F6</color>
+    <color name="expense_17">#4FC3F7</color>
+    <color name="expense_18">#4DD0E1</color>
+    <color name="expense_19">#4DB6AC</color>
+    <color name="expense_20">#81C784</color>
+    <color name="expense_21">#AED581</color>
+    <color name="expense_22">#DCE775</color>
+    <color name="expense_23">#FFF176</color>
+    <color name="expense_24">#FFD54F</color>
+    <color name="expense_25">#FFB74D</color>
+    <color name="expense_26">#FF8A65</color>
+    <color name="expense_27">#A1887F</color>
+    <color name="expense_28">#BDBDBD</color>
+    <color name="expense_29">#78909C</color>
+    <color name="expense_30">#546E7A</color>
+
+
+    <color name="income_1">#66BB6A</color>
+    <color name="income_2">#26A69A</color>
+    <color name="income_3">#FFCA28</color>
+    <color name="income_4">#00ACC1</color>
+    <color name="income_5">#9CCC65</color>
+
+    <color name="income_6">#A5D6A7</color>
+    <color name="income_7">#43A047</color>
+    <color name="income_8">#FFA726</color>
+    <color name="income_9">#80DEEA</color>
+    <color name="income_10">#C0CA33</color>
+</resources>

@@ -20,6 +20,7 @@ import androidx.navigation.toRoute
 import com.example.background_erase.nav.Routers
 import com.example.background_erase.ui.screen.OnboardingScreen
 import com.example.background_erase.ui.screen.home.ChatHomeScreen
+import com.example.background_erase.ui.screen.statistical.FinanceStatisticScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -62,7 +63,18 @@ fun MainContent() {
             }
             composable<Routers.ChatHomeScreen> { navBackStackEntry ->
                 val route = navBackStackEntry.toRoute<Routers.ChatHomeScreen>()
-                ChatHomeScreen()
+                ChatHomeScreen(
+                    onLeftClick = {
+                        nav.navigate(Routers.FinanceStatisticScreen)
+                    },
+                    onRightClick = {
+                        nav.navigate(Routers.FinanceStatisticScreen)
+                    }
+                )
+            }
+            composable<Routers.FinanceStatisticScreen> { navBackStackEntry ->
+                val route = navBackStackEntry.toRoute<Routers.FinanceStatisticScreen>()
+                FinanceStatisticScreen(onBackScreen = { nav.popBackStack() })
             }
         }
     }

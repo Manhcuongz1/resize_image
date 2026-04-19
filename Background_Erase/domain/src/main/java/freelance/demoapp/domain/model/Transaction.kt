@@ -13,6 +13,16 @@ data class Transaction(
     companion object {}
 
     enum class Type(val value: String) {
-        EXPENSE("EXPENSE"), INCOME("INCOME")
+        Expense("Expense"), Income("Income");
+
+        companion object {
+            fun of(name : String) : Type {
+                return when(name) {
+                    Expense.value -> Expense
+                    Income.value -> Income
+                    else -> Expense
+                }
+            }
+        }
     }
 }

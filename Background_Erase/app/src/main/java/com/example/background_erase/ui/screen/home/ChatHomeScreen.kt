@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -55,11 +56,66 @@ import com.example.background_erase.ui.screen.home.components.MessageUser
 import com.example.background_erase.ui.screen.home.components.TypingIndicator
 
 
+@Preview
+@Composable
+fun ChatHomeScreenPreview() {
+
+    val message1 = MessageUI(
+        id = 1,
+        conversationId = 1,
+        sender = MessageUI.Sender.User,
+        content = "Hello",
+        transaction = emptyList()
+    )
+
+    val message2 = MessageUI(
+        id = 2,
+        conversationId = 1,
+        sender = MessageUI.Sender.LLM,
+        content = "Hi 👋",
+        transaction = emptyList()
+    )
+
+    ScreenContent(
+        listOf(
+            ChatItem.Success(message1),
+            ChatItem.Success(message2),
+            ChatItem.Success(message1),
+            ChatItem.Typing,
+        ).reversed(),
+        onExtractTransactions = {},
+        onLeftClick = {},
+        onRightClick = {}
+    )
+}
+
 @Composable
 fun ChatHomeScreen(
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatViewModel = hiltViewModel(),
+    onLeftClick: () -> Unit,
+    onRightClick: () -> Unit
 ) {
     val messages by viewModel.messages.collectAsState()
+
+    ScreenContent(
+        messages,
+        onExtractTransactions = {
+            viewModel.extractTransactions(it)
+        },
+        onLeftClick = onLeftClick,
+        onRightClick = onRightClick
+    )
+
+}
+
+
+@Composable
+fun ScreenContent(
+    messages: List<ChatItem>,
+    onExtractTransactions: (String) -> Unit,
+    onLeftClick: () -> Unit,
+    onRightClick: () -> Unit
+){
     ConstraintLayout(
         Modifier
             .fillMaxHeight()
@@ -71,7 +127,9 @@ fun ChatHomeScreen(
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }
+            },
+            onLeftClick = onLeftClick,
+            onRightClick = onRightClick
         )
 
         BodyChat(
@@ -96,7 +154,7 @@ fun ChatHomeScreen(
                 }
                 .fillMaxWidth(),
             onSendClick = { content ->
-                viewModel.extractTransactions(content)
+                onExtractTransactions(content)
             }
 
         )
@@ -137,7 +195,9 @@ fun ItemChatSuccess(item : ChatItem.Success) {
 }
 
 @Composable
-fun TopActionButtons(modifier: Modifier) {
+fun TopActionButtons(modifier: Modifier,
+                     onLeftClick: () -> Unit = {},
+                     onRightClick: () -> Unit = {}) {
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
@@ -145,7 +205,7 @@ fun TopActionButtons(modifier: Modifier) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(
-                onClick = { /* TODO */ },
+                onClick = onLeftClick,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
@@ -159,7 +219,7 @@ fun TopActionButtons(modifier: Modifier) {
             }
 
             IconButton(
-                onClick = { /* TODO */ },
+                onClick = onRightClick,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
@@ -175,11 +235,6 @@ fun TopActionButtons(modifier: Modifier) {
     }
 }
 
-@Preview
-@Composable
-fun S() {
-    ChatInputBar(Modifier, onSendClick = {})
-}
 @Composable
 fun ChatInputBar(
     modifier: Modifier,
@@ -188,6 +243,8 @@ fun ChatInputBar(
     var text by remember { mutableStateOf("") }
     val btnSendColor =
         if (text.isNotBlank()) EnableButtonSendColor else DisableButtonSendColor
+
+    val shape = RoundedCornerShape(50.dp,50.dp, 50.dp, 50.dp)
     Column(modifier) {
         Row(
             modifier = Modifier
@@ -196,8 +253,8 @@ fun ChatInputBar(
                     paddingValues =
                         PaddingValues(start = 10.dp, end = 6.dp, top = 6.dp, bottom = 0.dp)
                 )
-                .border(width = 1.dp, color = BorderColor, shape = CircleShape)
-                .background(LightColor, shape = CircleShape)
+                .border(width = 1.dp, color = BorderColor, shape = shape)
+                .background(LightColor, shape = shape)
                 .padding(
                     paddingValues = PaddingValues(
                         start = 20.dp,
@@ -212,7 +269,7 @@ fun ChatInputBar(
                 value = text,
                 onValueChange = { text = it },
                 modifier = Modifier.weight(1f),
-                textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+                textStyle = TextStyle(fontSize = 14.sp, color = Color.Black),
                 decorationBox = { innerTextField ->
                     if (text.isEmpty()) {
                         Text(
@@ -229,11 +286,12 @@ fun ChatInputBar(
 
             IconButton(
                 onClick = {
-                    onSendClick.invoke(text)
                     if (text.isNotBlank()) {
+                        onSendClick.invoke(text.trim())
                         text = ""
                     }
                 },
+                enabled = text.isNotBlank(),
                 modifier = Modifier
                     .size(30.dp)
                     .clip(CircleShape)
