@@ -29,7 +29,7 @@ class CategoryRepositoryImp @Inject constructor(
     override suspend fun getColorWhenCreateNewCategory(type: Transaction.Type): Long {
         val colors = db.appDatabaseDao().getCategories().map { it.colorBackground }
         val list =
-            if (type == Transaction.Type.Income)
+            if (type == Transaction.Type.Expense)
                 listOfColorExpense(context)
             else listOfColorIncome(context)
 

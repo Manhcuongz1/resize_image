@@ -12,7 +12,7 @@ data class Category(
     val createdAt: Long = System.currentTimeMillis()
 ) {
     companion object {
-        const val COLOR_ICON_DEFAULT : Long = 0xF8FAFC
+        const val COLOR_ICON_DEFAULT : Long = 0xFFFFFFFF
     }
 }
 

@@ -9,16 +9,14 @@ import java.math.BigDecimal
 data class CategoryGroupUI(
     val category: CategoryUI,
     val transactions: List<TransactionUI>,
+    val typeCurrency: String = "đ",
     val totalAmount: BigDecimal,
     val iconChar: String,
     val iconBg: Long,
-    val iconColor: Long = 0xF8FAFC,
+    val iconColor: Long = 0xFFCCCCCC,
 ) {
     fun getSubTitle() : String {
         return transactions.size.toString() + " giao dịch"
-    }
-    fun getTotalAmountFormat(): String {
-        return totalAmount.toDefaultLocaleFormat()
     }
 }
 

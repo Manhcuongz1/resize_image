@@ -8,4 +8,8 @@
     <string name="today">Hôm nay</string>
     <string name="title_expense">Tổng chi</string>
     <string name="title_income">Tổng thu</string>
+    <string name="do_not_note">Không có ghi chú</string>
+    <string name="month">Tháng</string>
+    <string name="expense_label">"Chi tiêu"</string>
+    <string name="income_label">Thu nhập</string>
 </resources>

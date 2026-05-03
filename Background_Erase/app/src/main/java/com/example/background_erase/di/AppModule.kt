@@ -16,6 +16,7 @@ import freelance.demoapp.domain.repository.TransactionRepository
 import freelance.demoapp.domain.usecase.CreateMessageLLM
 import freelance.demoapp.domain.usecase.CreateNewCategory
 import freelance.demoapp.domain.usecase.ExtractTransactionsFromChatUseCase
+import freelance.demoapp.domain.usecase.FilterTransactionFromDate
 import freelance.demoapp.domain.usecase.GetAnalyticUseCase
 import freelance.demoapp.domain.usecase.GetCategories
 import freelance.demoapp.domain.usecase.InsertMessageUseCase
@@ -62,6 +63,11 @@ object AppModule {
     @Provides
     fun provideCreateMessageLLMUseCase(c : CategoryRepository): CreateMessageLLM {
         return CreateMessageLLM(c)
+    }
+
+    @Provides
+    fun provideFilterTransactionFromDate() : FilterTransactionFromDate {
+        return FilterTransactionFromDate()
     }
 
 }

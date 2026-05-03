@@ -1,5 +1,7 @@
 package com.example.background_erase.base
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalInspectionMode
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.time.LocalDateTime
@@ -18,6 +20,7 @@ object Utils {
         val formattedDate = current.format(formatter)
         return formattedDate
     }
+
 }
 
 fun BigDecimal.toDefaultLocaleFormat(minDecimal: Int = 0, maxDecimal: Int = 2): String {
@@ -28,4 +31,9 @@ fun BigDecimal.toDefaultLocaleFormat(minDecimal: Int = 0, maxDecimal: Int = 2): 
     }
 
     return formatter.format(this)
+}
+
+@Composable
+fun isPreview(): Boolean {
+    return LocalInspectionMode.current
 }

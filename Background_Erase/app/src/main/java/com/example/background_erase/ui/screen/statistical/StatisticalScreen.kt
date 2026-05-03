@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -42,12 +41,14 @@ import com.example.background_erase.model.CategoryGroupUI
 import com.example.background_erase.model.FinanceStatisticUiState
 import com.example.background_erase.model.TransactionUI
 import com.example.background_erase.ui.screen.statistical.components.CategoryRow
+import com.example.background_erase.ui.screen.statistical.components.MonthPicker
 import com.example.background_erase.ui.screen.statistical.components.PureComposeDonutChart
 import com.example.background_erase.ui.screen.statistical.components.SegmentedTab
 import com.example.background_erase.ui.screen.statistical.components.TopNavigation
 import com.example.background_erase.ui.screen.statistical.components.exportChartData
 import org.instancio.Instancio
 import java.math.BigDecimal
+import java.time.YearMonth
 
 // --- THEME COLORS ---
 val BgGray = Color(0xFFF7F8FA)
@@ -67,20 +68,22 @@ fun Pre() {
             iconChar = "A",
             iconBg = red,
             iconColor = white,
-            totalAmount = BigDecimal(45000)
+            totalAmount = BigDecimal(45000),
+            typeCurrency = "đ"
         ),
         Instancio.create(CategoryGroupUI::class.java).copy(
             iconChar = "A",
             iconBg = blue,
             iconColor = darkGray,
-            totalAmount = BigDecimal(60000)
+            totalAmount = BigDecimal(60000),
+            typeCurrency = "đ"
         )
     )
     val mock = Instancio.create(FinanceStatisticUiState::class.java).copy(
         displayCategories = displayCategories,
         typeCurrency = "đ"
     )
-    ScreenContent(mock,{},{})
+    ScreenContent(mock,YearMonth.of(2023,10),{},{},{},{})
 }
 
 @Composable
@@ -89,22 +92,25 @@ fun FinanceStatisticScreen(
     onBackScreen : () -> Unit,
 ) {
     val analytic by viewModel.analytic.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchStatisticData()
-    }
+    val currentTime by viewModel.currentTime.collectAsState()
 
     ScreenContent(
         analytic = analytic,
+        currentTime = currentTime,
         onTabSegmentSelected = viewModel::onTabSelected,
-        onBackScreen = onBackScreen
+        onBackScreen = onBackScreen,
+        onPreviousMonth = viewModel::onPreviousMonth,
+        onNextMonth = viewModel::onNextMonth
     )
 }
 
 @Composable
 private fun ScreenContent(
     analytic: FinanceStatisticUiState,
+    currentTime: YearMonth,
     onTabSegmentSelected: (TransactionUI.Type) -> Unit,
+    onPreviousMonth: () -> Unit,
+    onNextMonth: () -> Unit,
     onBackScreen: () -> Unit
 ) {
 
@@ -137,7 +143,13 @@ private fun ScreenContent(
                 .padding(4.dp),
             tab = analytic.selectedTab
         ) { onTabSegmentSelected.invoke(it) }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        MonthPicker(
+            Modifier,
+            stateTime = currentTime,
+            onPreviousMonth = onPreviousMonth,
+            onNextMonth = onNextMonth
+        )
         ContentStatistical(
             modifier = Modifier.fillMaxSize(),
             listState,
